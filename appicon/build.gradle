@@ -25,12 +25,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     //加了这个就传上去了
-//    publishing {
-//         singleVariant("release") {
-//            withSourcesJar()
-//            withJavadocJar()
-//        }
-//    }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
@@ -39,22 +39,13 @@ dependencies {
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 }
-//打包源码的task
-task sourceJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    archiveClassifier = "sources"
-}
 
-//def GROUP_ID = 'com.mhy'
-//def ARTIFACT_ID = "appicon"//project.getName()
-//def VERSION_NAME = '0.0.1'
+def GROUP_ID = 'com.mhy'
+def ARTIFACT_ID = "appicon"//project.getName()
+def VERSION_NAME = '0.0.5'
 ////artifactory私库直接执行这里
 //afterEvaluate {
 //    publishing {
-//        singleVariant("release") {
-//            withSourcesJar()
-//            withJavadocJar()
-//       }
 //        publications {
 //            release(MavenPublication) {
 //                from components.release //这是用的apg插件提共的
@@ -76,22 +67,28 @@ task sourceJar(type: Jar) {
 //        }
 //    }
 //}
+
+//打包源码的task
+task androidSourcesJar(type: Jar) {
+    archiveClassifier.set("sources")
+    // 源码路径，包含Java、kotlin代码
+    from android.sourceSets.main.java.getSrcDirs()
+    exclude "**/R.class"
+    exclude "**/BuildConfig.class"
+}
 //jitpack
 afterEvaluate {
     publishing {
         publications {
             register(MavenPublication) {
-
+                from components.release
                 //这里头是artifacts的配置信息，不填会采用默认的
-//                groupId = "com.gitee.mahongyin"
-//                artifactId = "HYAppIcon"
-//                version = "0.0.1"
-
-                // from components.release
+                groupId = GROUP_ID
+                artifactId = ARTIFACT_ID
+                version = VERSION_NAME
                 // 增加上传源码的 task
-                artifact sourceJar
+                artifact androidSourcesJar
                 // 必须有这个 否则不会上传AAR包  将bundleReleaseAar任务的单个输出文件作为发布的AAR文件。这样，该AAR文件就会成为 MavenPublication 的 artifact 并进行发布
-                afterEvaluate { artifact(tasks.getByName("bundleReleaseAar")) }
             }
         }
     }

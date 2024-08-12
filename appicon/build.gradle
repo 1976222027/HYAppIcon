@@ -73,7 +73,7 @@ def VERSION_NAME = '0.0.6'
 task androidSourcesJar(type: Jar) {
     archiveClassifier.set("sources")
     // 源码路径，包含Java、kotlin代码
-    from android.sourceSets.main.java.getSrcDirs()
+    from android.sourceSets.main.java.srcDirs
     exclude "**/R.class"
     exclude "**/BuildConfig.class"
 }

@@ -5,6 +5,13 @@
 app以后都要保持这些图标配置，不能乱删和乱禁用，小心桌面图标被禁了导致无图标无法进入app的情况，除非主启动页直接换了包路径或类名
 
 使用：
+```groovy
+maven { url 'https://jitpack.io' }
+//公仓
+implementation 'com.gitee.mahongyin:hyappicon:0.0.1'
+//私仓
+implementation 'com.mhy:appicon:0.0.1'
+```
 清单文件配置的所有桌面图标，和默认启用的意图路径名 
 
 android:enabled="false/true"  来设置默认启用的

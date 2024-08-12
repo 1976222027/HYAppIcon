@@ -27,7 +27,7 @@ android {
     //加了这个就传上去了
     publishing {
         singleVariant("release") {
-            //artifactory私库时解注这里
+            //使用apg插件里的？会包含源码和文档
 //            withSourcesJar()
 //            withJavadocJar()
         }
@@ -36,20 +36,18 @@ android {
 
 dependencies {
     implementation libs.appcompat
-    testImplementation libs.junit
-    androidTestImplementation libs.ext.junit
-    androidTestImplementation libs.espresso.core
 }
 
 def GROUP_ID = 'com.mhy'
 def ARTIFACT_ID = "appicon"//project.getName()
-def VERSION_NAME = '0.0.6'
+def VERSION_NAME = '0.0.7'
 ////artifactory私库直接执行这里
 //afterEvaluate {
 //    publishing {
 //        publications {
 //            release(MavenPublication) {
 //                from components.release //这是用的apg插件提共的
+//                //artifact androidSourcesJar //打包源码，去除这行打的包将看不到源码
 //                groupId = GROUP_ID
 //                artifactId = ARTIFACT_ID
 //                version = VERSION_NAME

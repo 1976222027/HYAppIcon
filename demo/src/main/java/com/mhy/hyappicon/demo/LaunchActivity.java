@@ -2,6 +2,7 @@ package com.mhy.hyappicon.demo;
 
 import android.content.ComponentName;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -52,27 +53,39 @@ public class LaunchActivity extends AppCompatActivity {
         HyAppIconUtils.initAllIconComponentName(list, componentName1);
 
 
-        findViewById(R.id.btn_change_icon6).setOnClickListener(v -> HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName6));
-        findViewById(R.id.btn_change_icon5).setOnClickListener(v -> HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName5));
-        findViewById(R.id.btn_change_icon4).setOnClickListener(v -> HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName4));
-        findViewById(R.id.btn_change_icon3).setOnClickListener(v -> HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName3));
-        findViewById(R.id.btn_change_icon2).setOnClickListener(v -> HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName2));
-        findViewById(R.id.btn_change_icon).setOnClickListener(v -> HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName1));
+        findViewById(R.id.btn_change_icon6).setOnClickListener(v -> changeIcon(componentName6));
+        findViewById(R.id.btn_change_icon5).setOnClickListener(v -> changeIcon(componentName5));
+        findViewById(R.id.btn_change_icon4).setOnClickListener(v -> changeIcon(componentName4));
+        findViewById(R.id.btn_change_icon3).setOnClickListener(v -> changeIcon(componentName3));
+        findViewById(R.id.btn_change_icon2).setOnClickListener(v -> changeIcon(componentName2));
+        findViewById(R.id.btn_change_icon).setOnClickListener(v -> changeIcon(componentName1));
         findViewById(R.id.other_activity).setOnClickListener(v -> startActivity(new Intent(LaunchActivity.this, IndexActivity.class)));
 
         ComponentName componentName = LaunchActivity.this.getComponentName();  //原主的Activity.getComponentName()就是作用在他身上可用的那个别名
         Log.e("HyAppIcon", "原主的getComponentName()得到的是作用在他的启用对象 " + componentName.getShortClassName());
-        findViewById(R.id.current_icon).setOnClickListener(v -> HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName, componentName5));
+        findViewById(R.id.current_icon).setOnClickListener(
+                v -> {
+                    //HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName, componentName5)
+                });
     }
 
     /**
-     * 退出时做替换
+     * 退出时自动做替换
      */
     public void backPressed() {
-        ComponentName componentName2 = new ComponentName(this, "com.mhy.hyappicon.demo.faviconA");
-        //换启动图标
-        HyAppIconUtils.changeAppIcon(this, componentName2);
+//        ComponentName componentName2 = new ComponentName(this, "com.mhy.hyappicon.demo.faviconA");
+//        //换启动图标
+//        HyAppIconUtils.changeAppIcon(this, componentName2);
         finish();
         System.exit(0);//有时候在退出时 主动杀掉进程会增进android10以下设备快些换标
+    }
+
+    private void changeIcon(ComponentName componentName) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName);
+        } else {
+            HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName);
+            System.exit(0);
+        }
     }
 }

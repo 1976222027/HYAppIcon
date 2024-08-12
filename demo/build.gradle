@@ -29,10 +29,7 @@ android {
 }
 
 dependencies {
-
     implementation libs.appcompat
-    implementation project(':appicon')
-    testImplementation libs.junit
-    androidTestImplementation libs.ext.junit
-    androidTestImplementation libs.espresso.core
+//    implementation project(':appicon')
+    implementation 'com.gitee.mahongyin:HYAppIcon:0.0.7'
 }

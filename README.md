@@ -8,7 +8,7 @@ app以后都要保持这些图标配置，不能乱删和乱禁用，小心桌�
 ```groovy
 maven { url 'https://jitpack.io' }
 //公仓
-implementation 'com.gitee.mahongyin:HyAppIcon:0.0.1'
+implementation 'com.gitee.mahongyin:HYAppIcon:0.0.1'
 //私仓
 implementation 'com.mhy:appicon:0.0.1'
 ```

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="false"
+        android:allowNativeHeapPointerTagging="false"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:extractNativeLibs="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:supportsRtl="false"
+
+        android:theme="@style/Theme.HYAppIcon"
+        android:usesCleartextTraffic="true"
+        tools:remove="android:roundIcon"
+        tools:replace="android:supportsRtl,android:icon,android:label,android:allowBackup"
+        tools:targetApi="31">
+
+        <!--原主，永远不要disable，去掉intent-filter 即可  启动页不能是singleInstance-->
+        <activity
+            android:name=".LaunchActivity"
+            android:configChanges="density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
+            android:enableOnBackInvokedCallback="true"
+            android:exported="true"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.HYAppIcon"
+            android:windowSoftInputMode="adjustResize">
+            <!--        <meta-data-->
+            <!--            android:name="io.flutter.embedding.android.NormalTheme"-->
+            <!--            android:resource="@style/Theme.HYAppIcon" />-->
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity-alias
+            android:name=".faviconE"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/favicon6"
+            android:label="暴风清理"
+            android:targetActivity=".LaunchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".faviconD"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/favicon5"
+            android:label="互联生活"
+            android:targetActivity=".LaunchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".faviconC"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/favicon4"
+            android:label="微软邮箱"
+            android:targetActivity=".LaunchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".faviconB"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/favicon3"
+            android:label="华泰理财"
+            android:targetActivity=".LaunchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".faviconA"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/favicon2"
+            android:label="灵动音乐"
+            android:targetActivity=".LaunchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <!--和原主一样-->
+        <activity-alias
+            android:name=".LaunchActivity"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="原主"
+            android:targetActivity=".LaunchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity android:name=".IndexActivity"/>
+    </application>
+</manifest>

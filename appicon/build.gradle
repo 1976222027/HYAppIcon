@@ -1,0 +1,84 @@
+plugins {
+    alias(libs.plugins.android.library)
+    id 'maven-publish'
+}
+
+android {
+    namespace 'com.mhy.hyappicon'
+    compileSdk 34
+
+    defaultConfig {
+        minSdk 21
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    //加了这个就传上去了
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+
+dependencies {
+    implementation libs.appcompat
+    testImplementation libs.junit
+    androidTestImplementation libs.ext.junit
+    androidTestImplementation libs.espresso.core
+}
+
+
+//def GROUP_ID = 'com.mhy'
+//def ARTIFACT_ID = "appicon"//project.getName()
+//def VERSION_NAME = '0.0.1'
+////artifactory私库直接执行这里
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            release(MavenPublication) {
+//                from components.release
+//                groupId = GROUP_ID
+//                artifactId = ARTIFACT_ID
+//                version = VERSION_NAME
+//            }
+//        }
+//        repositories {
+//            maven {
+//                allowInsecureProtocol true  // 如果MAVEN_LOCAL_PATH是http，此处必须为true，如果是https，则可以删除此项
+//                name = "artifactory"  //"nexus" 配置后在Gradle > Tasks > publishing 下会显示对应的名称，容易区分
+//                url = uri(MAVEN_URL)
+//                credentials {
+//                    username = MAVEN_USER
+//                    password = MAVEN_PASSWORD
+//                }
+//            }
+//        }
+//    }
+//}
+//jitpack
+afterEvaluate {
+    publishing {
+        publications {
+            register(MavenPublication) {
+                from components.release
+                groupId = "com.gitee.mahongyin"
+                artifactId = "appicon"
+                version = "0.0.1"
+            }
+        }
+    }
+}
+

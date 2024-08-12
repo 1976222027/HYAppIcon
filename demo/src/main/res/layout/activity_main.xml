@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LaunchActivity">
+
+    <Button
+        android:id="@+id/btn_change_icon2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="换成IconA"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_change_icon3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="换成IconB"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_change_icon4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="换成IconC"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_change_icon5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="换成IconD"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_change_icon6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="换成IconE"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/btn_change_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="换成Icon"
+        android:textAllCaps="false" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="10dp"
+        android:text="android10会立即生效退出app,android10以下会等待一会才生效" />
+
+    <Button
+        android:id="@+id/other_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="other Activity"
+        android:textAllCaps="false" />
+    <Button
+        android:id="@+id/current_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="自己指定"
+        android:textAllCaps="false" />
+</LinearLayout>

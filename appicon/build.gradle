@@ -75,7 +75,7 @@ afterEvaluate {
             register(MavenPublication) {
                 from components.release
                 groupId = "com.gitee.mahongyin"
-                artifactId = "appicon"
+                artifactId = "HyAppIcon"
                 version = "0.0.1"
             }
         }

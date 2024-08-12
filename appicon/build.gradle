@@ -27,8 +27,9 @@ android {
     //加了这个就传上去了
     publishing {
         singleVariant("release") {
-            withSourcesJar()
-            withJavadocJar()
+            //artifactory私库时解注这里
+//            withSourcesJar()
+//            withJavadocJar()
         }
     }
 }
@@ -42,7 +43,7 @@ dependencies {
 
 def GROUP_ID = 'com.mhy'
 def ARTIFACT_ID = "appicon"//project.getName()
-def VERSION_NAME = '0.0.5'
+def VERSION_NAME = '0.0.6'
 ////artifactory私库直接执行这里
 //afterEvaluate {
 //    publishing {

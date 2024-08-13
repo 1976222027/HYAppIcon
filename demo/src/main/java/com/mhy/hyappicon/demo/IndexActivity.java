@@ -2,6 +2,7 @@ package com.mhy.hyappicon.demo;
 
 import android.content.ComponentName;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +28,8 @@ public class IndexActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        findViewById(R.id.other_activity).setVisibility(View.GONE);
+        findViewById(R.id.current_icon).setVisibility(View.GONE);
 
         ComponentName componentName6 = new ComponentName(this, "com.mhy.hyappicon.demo.faviconE");
         ComponentName componentName5 = new ComponentName(this, "com.mhy.hyappicon.demo.faviconD");
@@ -45,11 +48,15 @@ public class IndexActivity extends AppCompatActivity {
         HyAppIconUtils.initAllIconComponentName(list, componentName1);
 
 
-        findViewById(R.id.btn_change_icon6).setOnClickListener(v -> HyAppIconUtils.changeAppIcon(IndexActivity.this, componentName6));
-        findViewById(R.id.btn_change_icon5).setOnClickListener(v -> HyAppIconUtils.changeAppIcon(IndexActivity.this, componentName5));
-        findViewById(R.id.btn_change_icon4).setOnClickListener(v -> HyAppIconUtils.changeAppIcon(IndexActivity.this, componentName4));
-        findViewById(R.id.btn_change_icon3).setOnClickListener(v -> HyAppIconUtils.changeAppIcon(IndexActivity.this, componentName3));
-        findViewById(R.id.btn_change_icon2).setOnClickListener(v -> HyAppIconUtils.changeAppIcon(IndexActivity.this, componentName2));
-        findViewById(R.id.btn_change_icon).setOnClickListener(v -> HyAppIconUtils.changeAppIcon(IndexActivity.this, componentName1));
+        findViewById(R.id.btn_change_icon6).setOnClickListener(v -> changeIcon(componentName6));
+        findViewById(R.id.btn_change_icon5).setOnClickListener(v -> changeIcon(componentName5));
+        findViewById(R.id.btn_change_icon4).setOnClickListener(v -> changeIcon(componentName4));
+        findViewById(R.id.btn_change_icon3).setOnClickListener(v -> changeIcon(componentName3));
+        findViewById(R.id.btn_change_icon2).setOnClickListener(v -> changeIcon(componentName2));
+        findViewById(R.id.btn_change_icon).setOnClickListener(v -> changeIcon(componentName1));
+    }
+
+    private void changeIcon(ComponentName componentName) {
+        HyAppIconUtils.changeAppIcon(this, componentName, null);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
@@ -52,7 +53,6 @@ public class LaunchActivity extends AppCompatActivity {
         list.add(componentName1);
         HyAppIconUtils.initAllIconComponentName(list, componentName1);
 
-
         findViewById(R.id.btn_change_icon6).setOnClickListener(v -> changeIcon(componentName6));
         findViewById(R.id.btn_change_icon5).setOnClickListener(v -> changeIcon(componentName5));
         findViewById(R.id.btn_change_icon4).setOnClickListener(v -> changeIcon(componentName4));
@@ -61,12 +61,18 @@ public class LaunchActivity extends AppCompatActivity {
         findViewById(R.id.btn_change_icon).setOnClickListener(v -> changeIcon(componentName1));
         findViewById(R.id.other_activity).setOnClickListener(v -> startActivity(new Intent(LaunchActivity.this, IndexActivity.class)));
 
-        ComponentName componentName = LaunchActivity.this.getComponentName();  //原主的Activity.getComponentName()就是作用在他身上可用的那个别名
-        Log.e("HyAppIcon", "原主的getComponentName()得到的是作用在他的启用对象 " + componentName.getShortClassName());
+
         findViewById(R.id.current_icon).setOnClickListener(
                 v -> {
-                    //HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName, componentName5)
+                    currentName();
                 });
+    }
+
+    private void currentName() {
+        //原主的Activity.getComponentName()就是作用在他身上可用的那个别名
+        ComponentName componentName = LaunchActivity.this.getComponentName();
+        ((Button) findViewById(R.id.current_icon)).setText(componentName.getShortClassName());
+        Log.e("HyAppIcon", "原主的getComponentName():" + componentName.getShortClassName());
     }
 
     /**
@@ -81,11 +87,13 @@ public class LaunchActivity extends AppCompatActivity {
     }
 
     private void changeIcon(ComponentName componentName) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName);
-        } else {
-            HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName);
-            //System.exit(0);//version 0.0.7调 //0.0.8不用
+        HyAppIconUtils.changeAppIcon(this, componentName, null);
+        //********************************************
+        //最后,解决低版本手机不能立即生效的问题
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            //使10以下立即生效，只能在栈根调用，否则会有问题，或者自己主动清栈
+            System.exit(0);
         }
+        //********************************************
     }
 }

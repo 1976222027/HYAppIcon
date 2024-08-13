@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_marginTop="30dp"
+    android:orientation="vertical"
     tools:context=".LaunchActivity">
 
     <Button
@@ -62,10 +62,11 @@
         android:layout_height="wrap_content"
         android:text="other Activity"
         android:textAllCaps="false" />
+
     <Button
         android:id="@+id/current_icon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="自己指定"
+        android:text="当前Name"
         android:textAllCaps="false" />
 </LinearLayout>

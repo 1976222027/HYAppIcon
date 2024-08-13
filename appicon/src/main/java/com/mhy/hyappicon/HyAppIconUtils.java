@@ -51,6 +51,7 @@ public class HyAppIconUtils {
             if (componentName == enable) {//要启用的目标不做禁用 跳过
                 continue;
             }
+            //找到当前启用中的，将其禁用掉
             int disableState = packageManager.getComponentEnabledSetting(componentName);
             if (mDefaultEnable == componentName) {//默认启用的那个，enable 和 default 都是启用状态，还有默认状态的干扰
                 if (disableState != PackageManager.COMPONENT_ENABLED_STATE_DISABLED) {//不等于就要设置
@@ -68,12 +69,13 @@ public class HyAppIconUtils {
                 }
             }
         }
+        //启用目标图标
         int enableState = packageManager.getComponentEnabledSetting(enable);
         //默认启用的 default就是启用 。默认禁用的 default就是禁用
         if (enableState != PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {//不等于就要设置
             //明确非可用时
             packageManager.setComponentEnabledSetting(enable,
-                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, flag);
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED, /*flag*/0);//最后启用的可以直接
             Log.i("应用换标enable ", enable.getShortClassName());
         }
     }
@@ -94,13 +96,13 @@ public class HyAppIconUtils {
     }
 
     /**其他 想自己禁用/启用的时候用这个，但不提倡
-     * @param currentEnableComponentName  需要禁用的 待禁用的目标 必须是当前服役的，已避免启用多个造成桌面多个图标，而没正确禁用正服役的
+     * @param disableComponentName  需要禁用的 待禁用的目标 必须是当前服役的，已避免启用多个造成桌面多个图标，而没正确禁用正服役的
      * @param enableComponentName 需要启用的
      */
     @Deprecated
-    public static void changeAppIcon(Context context, ComponentName currentEnableComponentName, ComponentName enableComponentName) {
+    public static void changeAppIcon(Context context, ComponentName disableComponentName, ComponentName enableComponentName) {
         PackageManager packageManager = context.getPackageManager();
-        packageManager.setComponentEnabledSetting(currentEnableComponentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
-        packageManager.setComponentEnabledSetting(enableComponentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,  PackageManager.DONT_KILL_APP);
+        packageManager.setComponentEnabledSetting(disableComponentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        packageManager.setComponentEnabledSetting(enableComponentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,  0);//启用
     }
 }

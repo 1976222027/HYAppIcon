@@ -11,6 +11,7 @@ app以后都要保持这些图标配置，不能乱删和乱禁用，小心桌�
 maven { url 'https://jitpack.io' }
 //公仓
 implementation 'com.gitee.mahongyin:HYAppIcon:0.0.7'
+implementation 'com.gitee.mahongyin:HYAppIcon:0.0.8' //细微差异 0.7/0.8均可
 
 ```
 清单文件配置的所有桌面图标，和默认启用的意图路径名 

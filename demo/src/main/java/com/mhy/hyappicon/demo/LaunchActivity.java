@@ -85,7 +85,7 @@ public class LaunchActivity extends AppCompatActivity {
             HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName);
         } else {
             HyAppIconUtils.changeAppIcon(LaunchActivity.this, componentName);
-            System.exit(0);
+            //System.exit(0);//version 0.0.7调 //0.0.8不用
         }
     }
 }

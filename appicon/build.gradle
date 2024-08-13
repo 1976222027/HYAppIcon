@@ -40,7 +40,7 @@ dependencies {
 
 def GROUP_ID = 'com.mhy'
 def ARTIFACT_ID = "appicon"//project.getName()
-def VERSION_NAME = '0.0.7'
+def VERSION_NAME = '0.0.8'
 ////artifactory私库直接执行这里
 //afterEvaluate {
 //    publishing {

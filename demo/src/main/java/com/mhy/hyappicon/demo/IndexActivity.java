@@ -27,6 +27,7 @@ public class IndexActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0, 0);
         setContentView(R.layout.activity_main);
         findViewById(R.id.other_activity).setVisibility(View.GONE);
         findViewById(R.id.current_icon).setVisibility(View.GONE);
@@ -58,5 +59,11 @@ public class IndexActivity extends AppCompatActivity {
 
     private void changeIcon(ComponentName componentName) {
         HyAppIconUtils.changeAppIcon(this, componentName, null);
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, 0);
     }
 }

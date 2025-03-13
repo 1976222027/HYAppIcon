@@ -4,7 +4,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -61,9 +60,14 @@ public class HyAppIconUtils {
 
     /**
      * mComponentNameList整体管理防止出错
-     * @param enable  待启用的目标
-     *                原理就是找出那个启用的给他禁用，再把目标启用
+     *
+     * @param enable 待启用的目标
+     *               原理就是找出那个启用的给他禁用，再把目标启用
      */
+    public static void changeAppIcon(Context context, @NonNull ComponentName enable) {
+        changeAppIcon(context, enable, null);
+    }
+
     public static void changeAppIcon(Context context, @NonNull ComponentName enable, @Nullable OnChangeAppIconListener listener) {
         if (mComponentNameList == null) {
             throw new RuntimeException("请先调用initAllComponentName方法初始化传入所有图标的目标");

@@ -112,5 +112,12 @@
 
 
         <activity android:name=".IndexActivity" />
+        <activity
+            android:name=".ChangeIconActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:screenOrientation="behind"
+            android:theme="@style/splashscreen_noTheme" />
     </application>
 </manifest>

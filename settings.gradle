@@ -18,7 +18,14 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
-        maven { url 'https://a1000.top/maven/' }
+        //maven { url 'https://a1000.eu.org/maven/' }
+        maven {
+            url ALI_USE_MAVEN
+            credentials {
+                username ALI_USE_USER
+                password ALI_USE_PWD
+            }
+        }
     }
 }
 

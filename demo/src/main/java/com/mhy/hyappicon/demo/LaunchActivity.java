@@ -15,7 +15,6 @@ import com.mhy.hyappicon.HyAppIconUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * =====================================
@@ -31,6 +30,7 @@ public class LaunchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0, 0);
         setContentView(R.layout.activity_main);
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
@@ -38,8 +38,18 @@ public class LaunchActivity extends AppCompatActivity {
                 backPressed();
             }
         });
-        Utils.getPermission(this);
-        Utils.getMetaData(this);
+
+        if (!isTaskRoot()) {
+            // || intent.flags & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT != 0
+            //注释FLAG_ACTIVITY_BROUGHT_TO_FRONT判断，以解决以下问题：
+            //问题：app杀死，分享的h5页，从微信跳转点击打开，快速多次点击允许（即将离开微信，打开“央视体育手机客户端”  弹窗的允许按钮），
+            //跳转到app内到webView页，此时点击返回无法正常返回到app页。
+
+            //热启动 只处理Uri即可 有link 直接跳转link
+            finish();
+            return;
+        }
+
         ComponentName componentName6 = new ComponentName(this, "com.mhy.hyappicon.demo.faviconE");
         ComponentName componentName5 = new ComponentName(this, "com.mhy.hyappicon.demo.faviconD");
         ComponentName componentName4 = new ComponentName(this, "com.mhy.hyappicon.demo.faviconC");
@@ -56,7 +66,14 @@ public class LaunchActivity extends AppCompatActivity {
         list.add(componentName1);
 
         HyAppIconUtils.initAllIconComponentName(list, componentName1);
-
+        //如果是启动时切换图标
+        boolean launchChange = false;
+        if (launchChange) { //如果是启动时切换图标
+            startActivity(new Intent(this, ChangeIconActivity.class));
+            finish();
+            return;
+        }
+        // 点击切换
         findViewById(R.id.btn_change_icon6).setOnClickListener(v -> changeIcon(componentName6));
         findViewById(R.id.btn_change_icon5).setOnClickListener(v -> changeIcon(componentName5));
         findViewById(R.id.btn_change_icon4).setOnClickListener(v -> changeIcon(componentName4));
@@ -65,17 +82,17 @@ public class LaunchActivity extends AppCompatActivity {
         findViewById(R.id.btn_change_icon).setOnClickListener(v -> changeIcon(componentName1));
         findViewById(R.id.other_activity).setOnClickListener(v -> startActivity(new Intent(LaunchActivity.this, IndexActivity.class)));
 
-        findViewById(R.id.current_icon).setOnClickListener(
-                v -> {
-                    currentName();
-                });
+        findViewById(R.id.current_icon).setOnClickListener(v -> {currentName();});
+
+//        Utils.getPermission(this);
+//        Utils.getMetaData(this);
     }
 
     private void currentName() {
         //原主的Activity.getComponentName()就是作用在他身上可用的那个别名
         ComponentName componentName = LaunchActivity.this.getComponentName();
         ((Button) findViewById(R.id.current_icon)).setText(componentName.getShortClassName());
-        Log.i("HyAppIcon", "当前的getClassName():" +getClass().getName());
+        Log.i("HyAppIcon", "当前的getClassName():" + getClass().getName());
         Log.e("HyAppIcon", "当前的getComponentName():" + componentName.getShortClassName());
     }
 
@@ -84,22 +101,28 @@ public class LaunchActivity extends AppCompatActivity {
      */
     public void backPressed() {//如果不想点击换图标那就等它退出了
 //        ComponentName componentName2 = new ComponentName(this, "com.mhy.hyappicon.demo.faviconA");
-//        //换启动图标
-//        HyAppIconUtils.changeAppIcon(this, componentName2);
+//        HyAppIconUtils.changeAppIcon(this, componentName2, null);
+
         finish();
         System.exit(0);//有时候在退出时 主动杀掉进程会增进android10以下设备快些换标
     }
 
     private void changeIcon(ComponentName componentName) {
-        HyAppIconUtils.changeAppIcon(this, componentName, null);
+        HyAppIconUtils.changeAppIcon(this, componentName);
         //********************************************
         //最后,解决低版本手机不能立即生效的问题
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {//android9最近任务不显示图标bug
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {//alias android9最近任务不显示图标bug
             //使10以下立即生效，只能在栈根调用，否则会有问题，或者自己主动清栈
 //            Utils.reStartApp(this);
             finishAffinity();//关闭所有亲和活动
             System.exit(0);
         }
         //********************************************
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(0, 0);
     }
 }

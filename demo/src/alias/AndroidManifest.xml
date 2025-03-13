@@ -30,9 +30,9 @@
             android:launchMode="singleTop"
             android:theme="@style/Theme.HYAppIcon"
             android:windowSoftInputMode="adjustResize">
-<!--            <intent-filter>-->
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!--            <intent-filter>-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
 
         <!--和原主一样-->
@@ -110,7 +110,13 @@
             </intent-filter>
         </activity-alias>
 
-
         <activity android:name=".IndexActivity" />
+        <activity
+            android:name=".ChangeIconActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|uiMode"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:screenOrientation="behind"
+            android:theme="@style/splashscreen_noTheme" />
     </application>
 </manifest>

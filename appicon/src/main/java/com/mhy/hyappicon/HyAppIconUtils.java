@@ -2,7 +2,9 @@ package com.mhy.hyappicon;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -10,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * =====================================
@@ -22,8 +25,15 @@ import java.util.List;
  * =====================================
  */
 public class HyAppIconUtils {
+    /**
+     * 所有图标的目标
+     */
     private static List<ComponentName> mComponentNameList;
+    /**
+     * 清单文件中默认enable的那个 main_launcher
+     */
     private static ComponentName mDefaultEnable;
+    ;
 
     public interface OnChangeAppIconListener {
         /**
@@ -51,14 +61,15 @@ public class HyAppIconUtils {
 
     /**
      * mComponentNameList整体管理防止出错
-     *
-     * @param context 当前启动页？
      * @param enable  待启用的目标
      *                原理就是找出那个启用的给他禁用，再把目标启用
      */
     public static void changeAppIcon(Context context, @NonNull ComponentName enable, @Nullable OnChangeAppIconListener listener) {
-        if (mComponentNameList == null || mDefaultEnable == null) {
+        if (mComponentNameList == null) {
             throw new RuntimeException("请先调用initAllComponentName方法初始化传入所有图标的目标");
+        }
+        if (mDefaultEnable == null) {
+            throw new RuntimeException("清单文件中没有Action.MAIN");
         }
         //flag=0 不安全，会强制杀死，可能导致后面方法没执行呢就结束了，造成启用/禁用未完成, 桌面图标不符合预期
         int flag = PackageManager.DONT_KILL_APP;
@@ -69,7 +80,9 @@ public class HyAppIconUtils {
             }
             //找到当前启用中的，将其禁用掉
             int disableState = packageManager.getComponentEnabledSetting(componentName);
-            if (mDefaultEnable == componentName) {//默认启用的那个，enable 和 default 都是启用状态，还有默认状态的干扰
+            //if (TextUtils.equals(mDefaultEnable.flattenToString(), componentName.flattenToString())) {//严谨判断
+            if (Objects.equals(mDefaultEnable, componentName)) {//严谨判断
+                //清单中默认启用的那个，enable 和 default 都是启用状态，还有默认状态的干扰
                 if (disableState != PackageManager.COMPONENT_ENABLED_STATE_DISABLED) {//不等于就要设置
                     //明确非禁用时
                     Log.i("应用换标disable ", componentName.getShortClassName());
@@ -113,7 +126,9 @@ public class HyAppIconUtils {
     public static boolean isEnableIcon(Context context, @NonNull ComponentName componentName) {
         PackageManager packageManager = context.getPackageManager();
         int com1State = packageManager.getComponentEnabledSetting(componentName);
-        if (componentName == mDefaultEnable) {
+        //if (TextUtils.equals(mDefaultEnable.flattenToString(), componentName.flattenToString())) {//严谨判断,
+        if (Objects.equals(mDefaultEnable, componentName)) {//严谨判断,
+            // 清单中默认启用的那个
             return com1State == PackageManager.COMPONENT_ENABLED_STATE_ENABLED || com1State == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT;
         } else {
             return com1State == PackageManager.COMPONENT_ENABLED_STATE_ENABLED;
@@ -130,7 +145,17 @@ public class HyAppIconUtils {
     @Deprecated
     public static void changeAppIcon(@NonNull PackageManager packageManager, @NonNull ComponentName disableComponentName, @NonNull ComponentName enableComponentName) {
         int flag = PackageManager.DONT_KILL_APP;
-        packageManager.setComponentEnabledSetting(disableComponentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        packageManager.setComponentEnabledSetting(disableComponentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, flag);
         packageManager.setComponentEnabledSetting(enableComponentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, flag);//仅最后的可用0
     }
+
+    /**
+     * 桌面启动
+     */
+    public static void reStartApp(Context context) {
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intent);
+    }
+
 }

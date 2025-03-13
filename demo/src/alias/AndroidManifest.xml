@@ -20,95 +20,95 @@
         tools:targetApi="31">
 
         <!--原主，enabled=永远不要disable，去掉intent-filter main即可  启动页不能是singleInstance-->
-        <!--alis或继承的方式 都要保留这个主活动，在后边另外自增-->
+        <!--alis的方式 要保留这个主活动，在后边另外自增-->
         <activity
             android:name=".LaunchActivity"
             android:configChanges="density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
             android:enableOnBackInvokedCallback="true"
-            android:enabled="true"
             android:exported="true"
             android:hardwareAccelerated="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="原主"
             android:launchMode="singleTop"
             android:theme="@style/Theme.HYAppIcon"
             android:windowSoftInputMode="adjustResize">
+<!--            <intent-filter>-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+
+        <!--和原主一样-->
+        <activity-alias
+            android:name=".LaunchActivity"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="原主"
+            android:targetActivity=".LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity-alias>
         <!--可以换主题 /启动背景-->
-        <activity
+        <activity-alias
             android:name=".faviconE"
-            android:configChanges="density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
             android:enabled="false"
             android:exported="true"
-            android:hardwareAccelerated="true"
             android:icon="@mipmap/favicon6"
             android:label="暴风清理"
-            android:launchMode="singleTop">
+            android:targetActivity=".LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
+        </activity-alias>
+        <activity-alias
             android:name=".faviconD"
-            android:configChanges="density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
             android:enabled="false"
             android:exported="true"
-            android:hardwareAccelerated="true"
             android:icon="@mipmap/favicon5"
             android:label="互联生活"
-            android:launchMode="singleTop">
+            android:targetActivity=".LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
+        </activity-alias>
+        <activity-alias
             android:name=".faviconC"
-            android:configChanges="density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
             android:enabled="false"
             android:exported="true"
-            android:hardwareAccelerated="true"
             android:icon="@mipmap/favicon4"
             android:label="微软邮箱"
-            android:launchMode="singleTop">
+            android:targetActivity=".LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
+        </activity-alias>
+        <activity-alias
             android:name=".faviconB"
-            android:configChanges="density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
             android:enabled="false"
             android:exported="true"
-            android:hardwareAccelerated="true"
             android:icon="@mipmap/favicon3"
             android:label="华泰理财"
-            android:launchMode="singleTop">
+            android:targetActivity=".LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
+        </activity-alias>
+        <activity-alias
             android:name=".faviconA"
-            android:configChanges="density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|orientation|screenLayout|screenSize|smallestScreenSize|uiMode"
             android:enabled="false"
             android:exported="true"
-            android:hardwareAccelerated="true"
             android:icon="@mipmap/favicon2"
             android:label="灵动音乐"
-            android:launchMode="singleTop">
+            android:targetActivity=".LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity-alias>
 
 
         <activity android:name=".IndexActivity" />

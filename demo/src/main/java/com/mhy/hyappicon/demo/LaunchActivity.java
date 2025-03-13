@@ -15,6 +15,7 @@ import com.mhy.hyappicon.HyAppIconUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * =====================================
@@ -37,6 +38,8 @@ public class LaunchActivity extends AppCompatActivity {
                 backPressed();
             }
         });
+        Utils.getPermission(this);
+        Utils.getMetaData(this);
         ComponentName componentName6 = new ComponentName(this, "com.mhy.hyappicon.demo.faviconE");
         ComponentName componentName5 = new ComponentName(this, "com.mhy.hyappicon.demo.faviconD");
         ComponentName componentName4 = new ComponentName(this, "com.mhy.hyappicon.demo.faviconC");
@@ -51,6 +54,7 @@ public class LaunchActivity extends AppCompatActivity {
         list.add(componentName3);
         list.add(componentName2);
         list.add(componentName1);
+
         HyAppIconUtils.initAllIconComponentName(list, componentName1);
 
         findViewById(R.id.btn_change_icon6).setOnClickListener(v -> changeIcon(componentName6));
@@ -60,7 +64,6 @@ public class LaunchActivity extends AppCompatActivity {
         findViewById(R.id.btn_change_icon2).setOnClickListener(v -> changeIcon(componentName2));
         findViewById(R.id.btn_change_icon).setOnClickListener(v -> changeIcon(componentName1));
         findViewById(R.id.other_activity).setOnClickListener(v -> startActivity(new Intent(LaunchActivity.this, IndexActivity.class)));
-
 
         findViewById(R.id.current_icon).setOnClickListener(
                 v -> {
@@ -72,13 +75,14 @@ public class LaunchActivity extends AppCompatActivity {
         //原主的Activity.getComponentName()就是作用在他身上可用的那个别名
         ComponentName componentName = LaunchActivity.this.getComponentName();
         ((Button) findViewById(R.id.current_icon)).setText(componentName.getShortClassName());
-        Log.e("HyAppIcon", "原主的getComponentName():" + componentName.getShortClassName());
+        Log.i("HyAppIcon", "当前的getClassName():" +getClass().getName());
+        Log.e("HyAppIcon", "当前的getComponentName():" + componentName.getShortClassName());
     }
 
     /**
      * 退出时自动做替换
      */
-    public void backPressed() {
+    public void backPressed() {//如果不想点击换图标那就等它退出了
 //        ComponentName componentName2 = new ComponentName(this, "com.mhy.hyappicon.demo.faviconA");
 //        //换启动图标
 //        HyAppIconUtils.changeAppIcon(this, componentName2);
@@ -90,8 +94,10 @@ public class LaunchActivity extends AppCompatActivity {
         HyAppIconUtils.changeAppIcon(this, componentName, null);
         //********************************************
         //最后,解决低版本手机不能立即生效的问题
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {//android9最近任务不显示图标bug
             //使10以下立即生效，只能在栈根调用，否则会有问题，或者自己主动清栈
+//            Utils.reStartApp(this);
+            finishAffinity();//关闭所有亲和活动
             System.exit(0);
         }
         //********************************************

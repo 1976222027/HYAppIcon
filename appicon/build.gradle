@@ -24,7 +24,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    //加了这个就传上去了
+    //artifactory加了这个就传上去了
     publishing {
         singleVariant("release") {
             //使用apg插件里的？会包含源码和文档
@@ -40,7 +40,7 @@ dependencies {
 
 def GROUP_ID = 'com.mhy'
 def ARTIFACT_ID = "appicon"//project.getName()
-def VERSION_NAME = '0.0.8'
+def VERSION_NAME = '0.1.0'
 ////artifactory私库直接执行这里
 //afterEvaluate {
 //    publishing {
@@ -54,13 +54,21 @@ def VERSION_NAME = '0.0.8'
 //            }
 //        }
 //        repositories {
+////            maven {
+////                allowInsecureProtocol true  // 如果MAVEN_LOCAL_PATH是http，此处必须为true，如果是https，则可以删除此项
+////                name = "artifactory"  //"nexus" 配置后在Gradle > Tasks > publishing 下会显示对应的名称，容易区分
+////                url = uri(MAVEN_URL)
+////                credentials {
+////                    username = MAVEN_USER
+////                    password = MAVEN_PASSWORD
+////                }
+////            }
 //            maven {
-//                allowInsecureProtocol true  // 如果MAVEN_LOCAL_PATH是http，此处必须为true，如果是https，则可以删除此项
-//                name = "artifactory"  //"nexus" 配置后在Gradle > Tasks > publishing 下会显示对应的名称，容易区分
-//                url = uri(MAVEN_URL)
+//                allowInsecureProtocol true
+//                url = ALI_MAVEN_URL
 //                credentials {
-//                    username = MAVEN_USER
-//                    password = MAVEN_PASSWORD
+//                    it.username = ALI_USERNAME
+//                    it.password = ALI_PASSWORD
 //                }
 //            }
 //        }

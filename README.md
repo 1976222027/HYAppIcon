@@ -6,6 +6,9 @@ app以后都要保持这些图标配置，不能乱删和乱禁用，小心桌�
 补充：经对比发现，android10以下手机，使用activity-alias方式在最近任务中没有图标。。。这也是市面上选择不支持Android10以下的一个因素吧，10+就有图标了
 使用activity的方式任何系统版本都有图标，但是Android10以下没换完的就会有应用未安装的提示。而activity-alias方式没出现提示应用未安装的情况。
 使用：
+
+使用 <activity-alias /> 的方式 android9及以下非主活动： 最近任务都无图标，换回主活动有。 继承主启动页Activity的方式没问题。就是没换完提示应用未安装。换完就好了
+
 [![](https://jitpack.io/v/com.gitee.mahongyin/HYAppIcon.svg)](https://jitpack.io/#com.gitee.mahongyin/HYAppIcon)
 ```groovy
 maven { url 'https://jitpack.io' }

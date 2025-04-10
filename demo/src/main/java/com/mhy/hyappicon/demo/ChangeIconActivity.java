@@ -19,22 +19,14 @@ public class ChangeIconActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(0, 0);
         //"应用换标 过渡页" 直接进入主页了
         startActivity(new Intent(this, IndexActivity.class));
-        finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
         // 换图标会清栈，那让他清理独立栈。
         ComponentName componentName5 = new ComponentName(this, "com.mhy.hyappicon.demo.faviconD");
-        HyAppIconUtils.changeAppIcon(this,componentName5,null);
-    }
-
-    @Override
-    public void finish() {
+        HyAppIconUtils.changeAppIcon(this, componentName5);
+        //finish();
+        finishAffinity();//关闭所有亲和活动 该独立栈
         overridePendingTransition(0, 0);
-        super.finish();
     }
 }

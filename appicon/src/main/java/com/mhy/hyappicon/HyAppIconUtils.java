@@ -1,9 +1,11 @@
 package com.mhy.hyappicon;
 
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -70,10 +72,12 @@ public class HyAppIconUtils {
 
     public static void changeAppIcon(Context context, @NonNull ComponentName enable, @Nullable OnChangeAppIconListener listener) {
         if (mComponentNameList == null) {
-            throw new RuntimeException("请先调用initAllComponentName方法初始化传入所有图标的目标");
+            Log.e("AppIcon", "请先调用initAllComponentName方法初始化传入所有图标的目标");
+            return;
         }
         if (mDefaultEnable == null) {
-            throw new RuntimeException("清单文件中没有Action.MAIN");
+            Log.e("AppIcon", "清单文件中默认Action.MAIN启用的没有指定");
+            return;
         }
         //flag=0 不安全，会强制杀死，可能导致后面方法没执行呢就结束了，造成启用/禁用未完成, 桌面图标不符合预期
         int flag = PackageManager.DONT_KILL_APP;
@@ -120,6 +124,14 @@ public class HyAppIconUtils {
                 listener.onEnableAppIcon(enable);
             }
         }
+        //**************************************************************************
+        //最后,解决低版本手机不能立即生效的问题,不主动清栈的话<Q 延迟10秒左右系统自己清 就会关闭app的现象
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {//alias形式 android9最近任务不显示图标bug
+            //使10以下立即生效，只能在栈根调用，否则会有问题，或者自己主动清栈
+            if (context instanceof Activity) {//关闭所有亲和活动 要清栈，不主动清的话<Q 延迟10秒左右系统自己清 就会关闭app
+                ((Activity) context).finishAffinity();
+            }
+        }
     }
 
     /**
@@ -158,6 +170,9 @@ public class HyAppIconUtils {
      */
     public static void reStartApp(Context context) {
         Intent intent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
+        if (intent == null) {
+            return;
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }

@@ -1,9 +1,11 @@
 package com.mhy.hyappicon.demo;
 
 import android.content.ComponentName;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,6 +29,12 @@ public class IndexActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+            }
+        });
         overridePendingTransition(0, 0);
         setContentView(R.layout.activity_main);
         findViewById(R.id.other_activity).setVisibility(View.GONE);
@@ -59,11 +67,9 @@ public class IndexActivity extends AppCompatActivity {
 
     private void changeIcon(ComponentName componentName) {
         HyAppIconUtils.changeAppIcon(this, componentName, null);
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+//            finishAffinity();//关闭所有亲和活动  要清栈，不清<Q 系统自己延迟10秒左右清 就会关闭app
+//        }
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(0, 0);
-    }
 }

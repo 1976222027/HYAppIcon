@@ -42,6 +42,6 @@ android {
 dependencies {
     implementation libs.appcompat
     implementation project(':appicon')
-//    implementation 'com.gitee.mahongyin:HYAppIcon:0.1.0'
-//    implementation 'com.mhy:hyappicon:0.1.0'
+//    implementation 'com.gitee.mahongyin:HYAppIcon:0.1.1'
+//    implementation 'com.mhy:hyappicon:0.1.1'
 }

@@ -13,7 +13,7 @@ app以后都要保持这些图标配置，不能乱删和乱禁用，小心桌�
 ```groovy
 maven { url 'https://jitpack.io' }
 //公仓
-implementation 'com.gitee.mahongyin:HYAppIcon:0.0.8'
+implementation 'com.gitee.mahongyin:HYAppIcon:0.1.1'
 
 ```
 清单文件配置的所有桌面图标，和默认启用的意图路径名 
@@ -96,20 +96,10 @@ class TansparentActivity : AppCompatActivity() {
         ......
         HyAppIconUtils.initAllIconComponentName(list, componentName1);
         //跳转主页 这里就会清理这个栈而不会影响启动的栈
-        launchMain(intent, "icon")
-        finish()
-    }
-
-    override fun finish() {
-        super.finish()
-        overridePendingTransition(0, 0)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        // 切换图标...会清栈
-        ......
+        launchMain(intent, "icon") 
         HyAppIconUtils.changeAppIcon(IndexActivity.this, componentName2);
+        finish() 
+        overridePendingTransition(0, 0)
     }
 
 }
@@ -168,5 +158,5 @@ class TansparentActivity : AppCompatActivity() {
 
         <item name="android:windowAnimationStyle">@null</item>
     </style>
-    在activity-alis里对应设置需要的主题即可
+    在activity[-alis]里对应设置需要的主题即可
 ```
